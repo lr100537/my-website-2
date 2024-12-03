@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,10 +7,23 @@
   <style>
     body {
       text-align: center;
-      background-image: linear-gradient(rgb(51, 144, 255), rgb(255, 255, 255));
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
+      color: rgb(51, 51, 51); /* Default text color for light mode */
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Light mode (default) styles */
+    .light-mode {
+      background-image: linear-gradient(rgb(51, 144, 255), rgb(255, 255, 255));
+      color: rgb(51, 51, 51);
+    }
+
+    /* Dark mode styles */
+    .dark-mode {
+      background-color: #121212;
+      color: white;
     }
 
     h1 {
@@ -29,6 +43,12 @@
       color: rgb(51, 51, 51);
     }
 
+    /* Dark mode styling for section boxes */
+    .dark-mode .section-box {
+      background-color: rgba(34, 34, 34, 0.9);
+      color: white;
+    }
+
     ul {
       text-align: left;
       list-style-type: disc; /* Adds bullet points */
@@ -44,10 +64,70 @@
       font-size: 0.9em;
       color: rgb(102, 102, 102);
     }
+
+    /* Dark mode footer text */
+    .dark-mode footer {
+      color: white;
+    }
+
+    /* Dark mode button styling */
+    #darkModeToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: transparent;
+      border: 2px solid black;
+      color: black;
+      font-size: 18px;
+      padding: 8px 16px;
+      cursor: pointer;
+      z-index: 1000;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .dark-mode #darkModeToggle {
+      color: white;
+      border: 2px solid white;
+    }
+
+    #darkModeToggle:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Back to Top button styling */
+    #backToTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #0ba360;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 20px;
+      cursor: pointer;
+      display: none; /* Hidden by default */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    #backToTop:hover {
+      background-color: #3cba92;
+    }
+
+    /* Show the Back to Top button when scrolling down */
+    #backToTop.visible {
+      display: block;
+    }
+
   </style>
 </head>
 
-<body>
+<body class="light-mode" id="top">
+
+  <!-- Dark Mode Toggle Button -->
+  <button id="darkModeToggle">Dark Mode</button>
 
   <h1>Laksh Ratnani</h1>
 
@@ -97,6 +177,42 @@
     <p>© 2024 Laksh Ratnani | All Rights Reserved</p>
     <p>Credit to Raihan Nana for helping me build this website and the idea.</p>
   </footer>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop">↑</button>
+
+  <script>
+    // Dark Mode Toggle functionality
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    darkModeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');  // Toggle the dark-mode class on body
+      body.classList.toggle('light-mode'); // Toggle the light-mode class on body
+      if (body.classList.contains('dark-mode')) {
+        darkModeToggle.textContent = 'Light Mode';  // Change to Light Mode when dark mode is active
+      } else {
+        darkModeToggle.textContent = 'Dark Mode';  // Change back to Dark Mode when not active
+      }
+    });
+
+    // Back to Top button functionality
+    const backToTop = document.getElementById('backToTop');
+
+    // Show or hide the back to top button
+    window.onscroll = function() {
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    };
+
+    // Scroll to the top of the page when the button is clicked
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
 
 </body>
 </html>
