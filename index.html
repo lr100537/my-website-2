@@ -70,29 +70,43 @@
       color: white;
     }
 
-    /* Updated Dark Mode Button Styling */
-    #darkModeToggle {
+    /* Dark mode button styling */
+    #darkModeToggle, #specialModeButton {
       position: fixed;
       top: 20px;
-      right: 20px;
       background-color: transparent;
       border: 2px solid black;
       color: black;
-      font-size: 12px; /* Reduced font size */
-      padding: 5px 10px; /* Reduced padding */
+      font-size: 18px;
+      padding: 8px 16px;
       cursor: pointer;
       z-index: 1000;
       border-radius: 5px;
       transition: background-color 0.3s;
     }
 
-    .dark-mode #darkModeToggle {
+    .dark-mode #darkModeToggle, .dark-mode #specialModeButton {
       color: white;
       border: 2px solid white;
     }
 
-    #darkModeToggle:hover {
+    #darkModeToggle:hover, #specialModeButton:hover {
       background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Secret Button Styling */
+    #secretButton {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: royalblue;
+      color: white;
+      font-size: 20px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1001;
     }
 
     /* Back to Top button styling */
@@ -120,13 +134,20 @@
     #backToTop.visible {
       display: block;
     }
+
   </style>
 </head>
 
 <body class="light-mode" id="top">
 
-  <!-- Dark Mode Toggle Button -->
-  <button id="darkModeToggle">Dark Mode</button>
+  <!-- Dark Mode Toggle Button (fixed in the original position) -->
+  <button id="darkModeToggle" style="position: fixed; top: 20px; right: 20px;">Dark Mode</button>
+
+  <!-- Secret Button -->
+  <button id="secretButton">?</button>
+
+  <!-- Special Mode Button (Hidden by default) -->
+  <button id="specialModeButton" style="display: none; position: fixed; top: 20px; right: 120px;">Special Mode</button>
 
   <h1>Laksh Ratnani</h1>
 
@@ -155,19 +176,17 @@
     <ul>
       <li><a href="https://lr100537.github.io/my-website/" target="_blank">Minecraft website</a></li>
       <li><a href="https://lr100537.github.io/my-website-2/" target="_blank">About me website</a></li>
-      <!-- Add more links as needed -->
     </ul>
   </div>
 
   <div class="section-box">
     <p><strong>Tools I use:</strong>
     <ul>
-      <li>Github</li>
-      <li>Jsfiddle</li>
-      <li>HTML color codes</li>
+    <li>Github</li>
+    <li>Jsfiddle</li>
+    <li>HTML color codes</li>
     </ul>
     </p>
-    <!-- Add details about future aspirations and goals -->
   </div>
 
   <div class="section-box">
@@ -190,19 +209,50 @@
     const body = document.body;
 
     darkModeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-mode');  // Toggle the dark-mode class on body
-      body.classList.toggle('light-mode'); // Toggle the light-mode class on body
+      body.classList.toggle('dark-mode');
+      body.classList.toggle('light-mode');
       if (body.classList.contains('dark-mode')) {
-        darkModeToggle.textContent = 'Light Mode';  // Change to Light Mode when dark mode is active
+        darkModeToggle.textContent = 'Light Mode';
       } else {
-        darkModeToggle.textContent = 'Dark Mode';  // Change back to Dark Mode when not active
+        darkModeToggle.textContent = 'Dark Mode';
       }
+    });
+
+    // Secret Button functionality
+    const secretButton = document.getElementById('secretButton');
+    const specialModeButton = document.getElementById('specialModeButton');
+    let secretCodeEntered = '';
+
+    secretButton.addEventListener('click', () => {
+      const code = prompt("Enter the secret code:");
+      if (code === "97135L") {
+        specialModeButton.style.display = "block";
+      } else {
+        alert("Incorrect code. Try again!");
+      }
+    });
+
+    // Special Mode Button functionality
+    let isSpecialMode = false;
+
+    specialModeButton.addEventListener('click', () => {
+      if (isSpecialMode) {
+        // Switch back to normal mode
+        body.style.backgroundColor = '';
+        body.style.backgroundImage = '';
+        specialModeButton.textContent = 'Special Mode';
+      } else {
+        // Switch to special mode with green at the top and black at the bottom
+        body.style.backgroundColor = 'rgb(40, 245, 145)';
+        body.style.backgroundImage = 'linear-gradient(to bottom, rgb(40, 245, 145), black)';
+        specialModeButton.textContent = 'Normal Mode';
+      }
+      isSpecialMode = !isSpecialMode;
     });
 
     // Back to Top button functionality
     const backToTop = document.getElementById('backToTop');
 
-    // Show or hide the back to top button
     window.onscroll = function() {
       if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
         backToTop.classList.add('visible');
@@ -211,7 +261,6 @@
       }
     };
 
-    // Scroll to the top of the page when the button is clicked
     backToTop.addEventListener('click', function() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
