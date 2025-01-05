@@ -70,11 +70,10 @@
       color: white;
     }
 
-    /* Buttons */
+    /* Dark mode button styling */
     #darkModeToggle, #specialModeButton {
       position: fixed;
       top: 20px;
-      right: 20px;
       background-color: transparent;
       border: 2px solid black;
       color: black;
@@ -136,28 +135,19 @@
       display: block;
     }
 
-    /* Ensuring the buttons are side by side without overlap */
-    #darkModeToggle {
-      right: 20px;
-    }
-
-    #specialModeButton {
-      right: calc(20px + 120px); /* Adjust to be next to the Dark Mode button */
-    }
-
   </style>
 </head>
 
 <body class="light-mode" id="top">
 
-  <!-- Dark Mode Toggle Button -->
-  <button id="darkModeToggle">Dark Mode</button>
+  <!-- Dark Mode Toggle Button (fixed in the original position) -->
+  <button id="darkModeToggle" style="position: fixed; top: 20px; right: 20px;">Dark Mode</button>
 
   <!-- Secret Button -->
   <button id="secretButton">?</button>
 
   <!-- Special Mode Button (Hidden by default) -->
-  <button id="specialModeButton" style="display: none;">Special Mode</button>
+  <button id="specialModeButton" style="display: none; position: fixed; top: 20px; right: 120px;">Special Mode</button>
 
   <h1>Laksh Ratnani</h1>
 
@@ -177,7 +167,7 @@
   </div>
 
   <div class="section-box">
-    <p><strong>Section 3:</strong></p>
+    <p><strong>Work in Progress</strong></p>
     <!-- Add content for your timeline here -->
   </div>
 
