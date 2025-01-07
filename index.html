@@ -135,6 +135,37 @@
       display: block;
     }
 
+    /* Minigame styles */
+    #gameContainer {
+      margin: 20px;
+      display: none;
+    }
+
+    #gameStatus {
+      font-size: 1.2em;
+      margin: 20px 0;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 1.2em;
+      margin: 10px;
+      width: 100px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      cursor: pointer;
+      margin: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: lightblue;
+    }
+
+    button:hover {
+      background-color: lightgray;
+    }
   </style>
 </head>
 
@@ -167,8 +198,18 @@
   </div>
 
   <div class="section-box">
-    <p><strong>Work in Progress</strong></p>
-    <!-- Add content for your timeline here -->
+    <p><strong>Cool minigame</strong></p>
+    <button id="startButton" onclick="startGame()">Start Minigame</button>
+    <div id="gameContainer">
+      <div id="generatingText">Generating...</div>
+      <div>
+        <input type="number" id="guessInput" placeholder="Enter a number">
+        <button onclick="checkGuess()">Guess</button>
+      </div>
+      <div id="gameStatus"></div>
+      <button id="restartButton" onclick="restartGame()" style="display:none;">Play Again</button>
+      <button id="quitButton" onclick="quitGame()" style="display:none;">Quit Game</button>
+    </div>
   </div>
 
   <div class="section-box">
@@ -204,6 +245,9 @@
   <button id="backToTop">↑</button>
 
   <script>
+    let secretNumber;
+    let attempts = 0;
+
     // Dark Mode Toggle functionality
     const darkModeToggle = document.getElementById('darkModeToggle');
     const body = document.body;
@@ -237,12 +281,10 @@
 
     specialModeButton.addEventListener('click', () => {
       if (isSpecialMode) {
-        // Switch back to normal mode
         body.style.backgroundColor = '';
         body.style.backgroundImage = '';
         specialModeButton.textContent = 'Special Mode';
       } else {
-        // Switch to special mode with green at the top and black at the bottom
         body.style.backgroundColor = 'rgb(40, 245, 145)';
         body.style.backgroundImage = 'linear-gradient(to bottom, rgb(40, 245, 145), black)';
         specialModeButton.textContent = 'Normal Mode';
@@ -264,6 +306,48 @@
     backToTop.addEventListener('click', function() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // Minigame functions
+    function startGame() {
+      document.getElementById('startButton').style.display = 'none';
+      document.getElementById('gameContainer').style.display = 'block';
+      document.getElementById('generatingText').style.display = 'block';
+
+      setTimeout(() => {
+        secretNumber = Math.floor(Math.random() * 100) + 1; // Random number between 1 and 100
+        document.getElementById('generatingText').innerText = 'Done!';
+        attempts = 0;
+      }, 1500); // Slight delay to simulate number generation
+    }
+
+    function checkGuess() {
+      const guess = parseInt(document.getElementById('guessInput').value);
+      attempts++;
+
+      if (guess > secretNumber) {
+        document.getElementById('gameStatus').innerText = 'Too high!';
+      } else if (guess < secretNumber) {
+        document.getElementById('gameStatus').innerText = 'Too low!';
+      } else {
+        document.getElementById('gameStatus').innerText = 'You won!';
+        document.getElementById('restartButton').style.display = 'inline-block';
+        document.getElementById('quitButton').style.display = 'inline-block';
+      }
+    }
+
+    function restartGame() {
+      document.getElementById('guessInput').value = '';
+      document.getElementById('gameStatus').innerText = '';
+      document.getElementById('restartButton').style.display = 'none';
+      document.getElementById('quitButton').style.display = 'none';
+      startGame();
+    }
+
+    function quitGame() {
+      document.getElementById('gameContainer').style.display = 'none';
+      document.getElementById('startButton').style.display = 'inline-block';
+      document.getElementById('gameStatus').innerText = 'Press "Start" to begin the game!';
+    }
   </script>
 
 </body>
