@@ -324,7 +324,11 @@
       const guess = parseInt(document.getElementById('guessInput').value);
       attempts++;
 
-      if (guess > secretNumber) {
+      if (attempts >= 10) {
+        document.getElementById('gameStatus').innerText = `Game Over! The number was ${secretNumber}.`;
+        document.getElementById('restartButton').style.display = 'inline-block';
+        document.getElementById('quitButton').style.display = 'inline-block';
+      } else if (guess > secretNumber) {
         document.getElementById('gameStatus').innerText = 'Too high!';
       } else if (guess < secretNumber) {
         document.getElementById('gameStatus').innerText = 'Too low!';
